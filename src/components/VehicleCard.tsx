@@ -53,7 +53,7 @@ export function VehicleCard(vehicle: Vehicle) {
           </p>
           <p>por <span style={{ color: ColorTheme.goodText, fontSize: FontSize.super }}>{price}</span></p>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', padding: '0.9rem 7rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0.9rem 0rem' }}>
           <Button
             variant="outlined"
             style={{ borderRadius: '0.5rem', fontSize: FontSize.main, color: ColorTheme.primary, border: 'solid ' + ColorTheme.primary}}>
