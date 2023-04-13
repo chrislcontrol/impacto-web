@@ -1,26 +1,14 @@
-import { listVehicles } from "./providers/vehicles"
-import { VehicleCard } from "./components/VehicleCard"
+import { Header } from "./components/Header";
+import { Home } from "./pages/Home";
+
 
 
 function App() {
-  const vehicles = listVehicles().results
-
   return (
-    <div>{
-      vehicles.map(vehicle => {
-        return <VehicleCard
-          vehicle={{
-            model: vehicle.model,
-            brand: vehicle.brand,
-            price: vehicle.price,
-            description: vehicle.description
-          }}
-          imageB64="image"
-        />
-      })
-    }
-    </div>
+    <body>
+      <Header />
+      <Home />
+    </body>
   )
-}
-
+};
 export default App
