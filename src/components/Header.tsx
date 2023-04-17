@@ -11,7 +11,7 @@ export function Header() {
                     color: ColorTheme.text
                 }}
             >
-                <strong>Horário de atendimento:</strong> Seg a sex - 8h às 19h | Sáb - 8h às 13h
+                <strong>Horário de atendimento:</strong> Seg a sex - 8h às 19h | Sáb - 8h às 14h
             </div>
 
             <div style={{ textAlign: 'center' }}>
