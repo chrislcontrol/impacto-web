@@ -1,20 +1,21 @@
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SpeedIcon from '@mui/icons-material/Speed';
 import { Button } from "@mui/material";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ColorTheme from "../ColorTheme";
 import FontSize from "../FontSize";
 import { Vehicle } from "../types";
-import { useState } from 'react';
 
 export function VehicleCard(vehicle: Vehicle) {
   const oldPrice = vehicle.oldPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   const price = vehicle.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
   const shadow = {
     default: `0px 5px 10px ${ColorTheme.primary}`,
     focus: `20px 20px 100px 1px ${ColorTheme.primary}`,
   }
   const [currentShadow, setCurrentShadow] = useState(shadow.default)
+  const navigate = useNavigate()
 
   return (
     <div
@@ -97,7 +98,9 @@ export function VehicleCard(vehicle: Vehicle) {
           <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0.9rem 0rem' }}>
             <Button
               variant="outlined"
-              style={{ borderRadius: '0.5rem', fontSize: FontSize.main, color: ColorTheme.primary, border: 'solid ' + ColorTheme.primary }}>
+              style={{ borderRadius: '0.5rem', fontSize: FontSize.main, color: ColorTheme.primary, border: 'solid ' + ColorTheme.primary }}
+              onClick={() => navigate('/detalhes')}
+            >
               Ver mais
             </Button>
           </div>

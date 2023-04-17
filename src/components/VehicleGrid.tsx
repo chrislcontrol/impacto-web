@@ -28,6 +28,8 @@ export function VehicleGrid(props: VehicleProps) {
                                 yearModel={vehicle.yearModel}
                                 km={vehicle.km}
                                 oldPrice={vehicle.oldPrice}
+                                id={vehicle.id}
+                                key={vehicle.id}
                             />
                         )
                     }

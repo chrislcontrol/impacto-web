@@ -1,16 +1,16 @@
+import { Root } from "./Root";
 import Footer from "./components/Footer";
 import { Header } from "./components/Header";
-import { Home } from "./pages/Home";
 
 
 
 function App() {
   return (
-    <body>
+    <div>
       <Header />
-      <Home />
+      <Root />
       <Footer />
-    </body>
+    </div>
   )
 };
 export default App

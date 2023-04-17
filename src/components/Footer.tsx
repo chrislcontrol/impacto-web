@@ -3,6 +3,7 @@ import ColorTheme from "../ColorTheme"
 import FontSize from "../FontSize"
 import { AddressMap } from "./AddressMap"
 import HyperLink from "./HyperLink"
+import { phoneNumbers } from "../constants"
 
 export default () => {
     const styles = {
@@ -45,16 +46,20 @@ export default () => {
                     +20+-+Sert%C3%A3o+do+Maruim+S%C3%A3o+Jos%C3%A9+-+SC+88122-010'
                             text="R. Francisco Antônio da Silva, 20 - Sertão do Maruim, São José - SC, 88122-010" />
                     </div>
-                    <div style={styles.infoBoxRowStyle}>
-                        <WhatsApp style={{ color: 'green', fontSize: FontSize.main * 2 }} />
-                        <HyperLink href='https://api.whatsapp.com/send?phone=5548999924954' text="(48)99992-4954" />
-                    </div>
-                    <div style={styles.infoBoxRowStyle}>
-                        <WhatsApp style={{ color: 'green', fontSize: FontSize.main * 2 }} />
-                        <HyperLink href='https://api.whatsapp.com/send?phone=5548984561549' text="(48)98456-1549" />
-                    </div>
-                </p>
 
+                    {phoneNumbers.map(
+                        phone => {
+                            return (
+                                <div style={styles.infoBoxRowStyle}>
+                                    <WhatsApp style={{ color: 'green', fontSize: FontSize.main * 2 }} />
+                                    <HyperLink
+                                        href={'https://api.whatsapp.com/send?phone=55' + phone}
+                                        text={`(${phone.substring(0, 2)})${phone.substring(2, 7)}-${phone.substring(7)}`} />
+                                </div>
+                            )
+                        }
+                    )}
+                </p>
             </div>
         </div>
     )
