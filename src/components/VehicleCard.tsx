@@ -16,6 +16,7 @@ export function VehicleCard(vehicle: Vehicle) {
   }
   const [currentShadow, setCurrentShadow] = useState(shadow.default)
   const navigate = useNavigate()
+  const navigateToDetails = () => navigate('/detalhes')
 
   return (
     <div
@@ -52,6 +53,7 @@ export function VehicleCard(vehicle: Vehicle) {
           }}
           src={vehicle.image}
           alt={`${vehicle.brand} ${vehicle.model}`}
+          onClick={navigateToDetails}
         />
       </div>
 
@@ -99,7 +101,7 @@ export function VehicleCard(vehicle: Vehicle) {
             <Button
               variant="outlined"
               style={{ borderRadius: '0.5rem', fontSize: FontSize.main, color: ColorTheme.primary, border: 'solid ' + ColorTheme.primary }}
-              onClick={() => navigate('/detalhes')}
+              onClick={navigateToDetails}
             >
               Ver mais
             </Button>

@@ -12,7 +12,7 @@ export function VehicleGrid(props: VehicleProps) {
             flexWrap: 'wrap',
             justifyContent: 'space-between',
             alignContent: 'left',
-            margin: '5% 2.2%'
+            margin: '0 2.2% 5% 2.2%'
         }}>
             {
                 props.vehicles.map(

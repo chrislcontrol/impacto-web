@@ -4,8 +4,8 @@
 
 import {
     BrowserRouter,
-    Routes,
     Route,
+    Routes,
 } from "react-router-dom";
 import { Home } from "./pages/Home";
 import VehicleDetail from "./pages/VehicleDetail";

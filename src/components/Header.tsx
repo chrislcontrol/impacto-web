@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import ColorTheme from "../ColorTheme";
 import { phoneNumbers } from "../constants";
 
 export function Header() {
+    const navigate = useNavigate()
+
     return (
         <div>
             <div
@@ -15,23 +18,19 @@ export function Header() {
                 <strong>Horário de atendimento:</strong> Seg a sex - 8h às 19h | Sáb - 8h às 14h
             </div>
 
-            <a
-                href={'https://api.whatsapp.com/send?phone=55' + phoneNumbers[0]}
-                target="_blank"
+            <div
+                onClick={() => navigate('/')}
                 style={{
                     justifyContent: 'center',
-                    display: 'flex'
+                    display: 'flex', 
+                    cursor: 'pointer', 
+                    margin: '3rem 0'
                 }}
             >
-                <img
-                    src='/src/assets/img/logo.jpeg'
-                    style={{
-                        width: '100%',
-                        maxWidth: '85rem',
-                        maxHeight: '13rem'
-                    }}
-                />
-            </a>
+                <img src='/src/assets/img/logo.jpeg' style={{
+                    width: '60%'
+                }} />
+            </div>
         </div>
     )
 }
