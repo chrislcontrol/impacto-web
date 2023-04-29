@@ -1,7 +1,3 @@
-
-
-
-
 import {
     BrowserRouter,
     Route,
@@ -9,6 +5,7 @@ import {
 } from "react-router-dom";
 import { Home } from "./pages/Home";
 import VehicleDetail from "./pages/VehicleDetail";
+import VehicleImgCarousel from "./pages/VehicleImgCarousel";
 
 export function Root() {
     return (
@@ -16,6 +13,7 @@ export function Root() {
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/detalhes' element={<VehicleDetail />} />
+                <Route path='/detalhes/imagens' element={<VehicleImgCarousel />} />
             </Routes>
         </BrowserRouter>
     )

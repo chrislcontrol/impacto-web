@@ -1,7 +1,7 @@
 {
   "name": "impacto-web",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,11 +13,8 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.0",
-    "bootstrap": "^5.2.3",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
-    "react-multi-carousel": "^2.8.3",
     "react-router-dom": "^6.10.0"
   },
   "devDependencies": {

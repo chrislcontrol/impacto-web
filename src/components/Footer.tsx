@@ -5,7 +5,7 @@ import { AddressMap } from "./AddressMap"
 import HyperLink from "./HyperLink"
 import { phoneNumbers } from "../constants"
 
-export default () => {
+export default function Footer() {
     const styles = {
         infoBoxRowStyle: {
             display: 'flex',

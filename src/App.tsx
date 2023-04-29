@@ -1,6 +1,4 @@
 import { Root } from "./Root";
-import Footer from "./components/Footer";
-import { Header } from "./components/Header";
 import WhatsappFixed from "./components/WhatsappFixed";
 
 
@@ -10,7 +8,6 @@ function App() {
     <div>
       <Root />
       <WhatsappFixed />
-      <Footer />
     </div>
   )
 };

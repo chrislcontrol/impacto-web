@@ -1,3 +1,4 @@
+import Footer from "../components/Footer"
 import { Header } from "../components/Header"
 import { VehicleGrid } from "../components/VehicleGrid"
 import { listVehicles } from "../providers/vehicles"
@@ -19,6 +20,7 @@ export function Home() {
                 </div>
 
             </div>
+            <Footer />
         </div>
     )
 }

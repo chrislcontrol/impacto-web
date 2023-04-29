@@ -3,13 +3,16 @@ import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import { CSSProperties } from "react";
-import { Image } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 import ColorTheme from "../ColorTheme";
 import FontSize from "../FontSize";
+import Footer from '../components/Footer';
 import { Header } from '../components/Header';
 
 export default () => {
-    const secondaryImageSize = {
+    const navigate = useNavigate()
+
+    const secondaryimgSize = {
         height: '300px',
         width: '450px',
         border: 'solid ' + ColorTheme.item
@@ -42,7 +45,7 @@ export default () => {
                     display: 'flex',
                     alignItems: 'center'
                 }}>
-                    <Image className='extend-fluid-md' fluid={true} src='/src/assets/img/carro2.jpeg' style={{
+                    <img className='extend-fluid-md' src='/src/assets/img/carro2.jpeg' style={{
                         height: '607px',
                         width: '960px',
                         maxHeight: '100%',
@@ -50,19 +53,20 @@ export default () => {
                     }} />
 
                     <div style={secondaryGridStyle}>
-                        <Image fluid={true} src='/src/assets/img/carro2.jpeg' style={secondaryImageSize} />
-                        <Image fluid={true} src='/src/assets/img/carro.jpeg' style={secondaryImageSize} />
+                        <img src='/src/assets/img/carro2.jpeg' style={secondaryimgSize} />
+                        <img src='/src/assets/img/carro.jpeg' style={secondaryimgSize} />
 
                     </div>
 
                     <div style={secondaryGridStyle}>
-                        <Image fluid={true} src='/src/assets/img/carro.jpeg' style={secondaryImageSize} />
-                        <Image fluid={true} src='/src/assets/img/carro2.jpeg' style={{
-                            ...secondaryImageSize,
+                        <img src='/src/assets/img/carro.jpeg' style={secondaryimgSize} />
+                        <img src='/src/assets/img/carro2.jpeg' style={{
+                            ...secondaryimgSize,
                             filter: 'brightness(25%)',
                             cursor: 'pointer'
                         }} />
                         <div className='text-over-img'
+                            onClick={() => navigate('/detalhes/imagens')}
                             style={{
                                 position: 'absolute',
                                 bottom: '150px',
@@ -218,7 +222,11 @@ export default () => {
 
                     </div>
                 </div>
-            </div>  // container
+            </div>
+            
+            <Footer />
+
+
         </div>
 
 
