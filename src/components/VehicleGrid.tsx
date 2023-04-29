@@ -19,16 +19,7 @@ export function VehicleGrid(props: VehicleProps) {
                     vehicle => {
                         return (
                             < VehicleCard
-                                model={vehicle.model}
-                                brand={vehicle.brand}
-                                price={vehicle.price}
-                                image={vehicle.image}
-                                description={vehicle.description}
-                                year={vehicle.year}
-                                yearModel={vehicle.yearModel}
-                                km={vehicle.km}
-                                oldPrice={vehicle.oldPrice}
-                                id={vehicle.id}
+                                {...vehicle}
                                 key={vehicle.id}
                             />
                         )

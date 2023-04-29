@@ -2,13 +2,15 @@ import { useNavigate } from "react-router-dom";
 import ColorTheme from "../ColorTheme";
 import Carousel from "../components/Carousel"
 import CancelIcon from '@mui/icons-material/Cancel';
+import { Vehicle } from "../types";
+import { getSelectedVehicle } from "../utils";
 
 export default () => {
     const navigate = useNavigate()
-    const slides = [
-        '/src/assets/img/carro.jpeg',
-        '/src/assets/img/carro2.jpeg'
-    ]
+    const vehicle: Vehicle = getSelectedVehicle()
+    if (!Object.keys(vehicle)) { return navigate(-1) }
+    
+    const slides = vehicle.images.map(imgObj => imgObj.image)
     return (
         <div className='carousel-container' style={{
             display: 'flex',

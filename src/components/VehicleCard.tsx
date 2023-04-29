@@ -6,17 +6,22 @@ import { useNavigate } from 'react-router-dom';
 import ColorTheme from "../ColorTheme";
 import FontSize from "../FontSize";
 import { Vehicle } from "../types";
+import { convertNumberToMoney } from '../utils';
 
 export function VehicleCard(vehicle: Vehicle) {
-  const oldPrice = vehicle.oldPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  const price = vehicle.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const price = convertNumberToMoney(vehicle.price)
+  const oldPrice = !!vehicle.old_price ? convertNumberToMoney(vehicle.old_price) : price
+
   const shadow = {
     default: `0px 5px 10px ${ColorTheme.primary}`,
     focus: `20px 20px 100px 1px ${ColorTheme.primary}`,
   }
   const [currentShadow, setCurrentShadow] = useState(shadow.default)
   const navigate = useNavigate()
-  const navigateToDetails = () => navigate('/detalhes')
+  const navigateToDetails = () => {
+    sessionStorage.setItem('selectedVehicle', JSON.stringify(vehicle))
+    navigate('/detalhes')
+  }
 
   return (
     <div
@@ -51,7 +56,7 @@ export function VehicleCard(vehicle: Vehicle) {
             minHeight: '25rem',
             maxHeight: '25rem',
           }}
-          src={vehicle.image}
+          src={!!vehicle.images.length ? vehicle.images.filter(imageObject => { return imageObject.is_main })[0].image : ''}
           alt={`${vehicle.brand} ${vehicle.model}`}
           onClick={navigateToDetails}
         />
@@ -80,7 +85,7 @@ export function VehicleCard(vehicle: Vehicle) {
           }}>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               <CalendarMonthIcon />
-              <p>{vehicle.year} / {vehicle.yearModel}</p>
+              <p>{vehicle.year} / {vehicle.model_year}</p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               <SpeedIcon />

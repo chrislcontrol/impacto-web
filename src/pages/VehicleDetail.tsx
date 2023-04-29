@@ -1,4 +1,6 @@
+import { CalendarMonth, ColorLens, LocalGasStation } from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
+import EditRoadIcon from '@mui/icons-material/EditRoad';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
@@ -8,9 +10,25 @@ import ColorTheme from "../ColorTheme";
 import FontSize from "../FontSize";
 import Footer from '../components/Footer';
 import { Header } from '../components/Header';
+import { Vehicle } from '../types';
+import { convertNumberToMoney, getSelectedVehicle, translateFuel, translateGear } from '../utils';
 
 export default () => {
     const navigate = useNavigate()
+    const vehicle: Vehicle = getSelectedVehicle()
+
+    if (!Object.keys(vehicle)) { return navigate(-1) }
+
+    function listImagesByIsMain(isMain: boolean) {
+        return !!vehicle.images.length ? vehicle.images.filter(
+            img => { return img.is_main === isMain }
+        ) : []
+    }
+
+    const filteredVehiclesImagesByMain = listImagesByIsMain(true)
+
+    const mainVehicleImage = !!filteredVehiclesImagesByMain.length ? filteredVehiclesImagesByMain[0].image : ''
+    const otherImages = listImagesByIsMain(false).map(item => item.image)
 
     const secondaryimgSize = {
         height: '300px',
@@ -45,7 +63,7 @@ export default () => {
                     display: 'flex',
                     alignItems: 'center'
                 }}>
-                    <img className='extend-fluid-md' src='/src/assets/img/carro2.jpeg' style={{
+                    <img className='extend-fluid-md' src={mainVehicleImage} style={{
                         height: '607px',
                         width: '960px',
                         maxHeight: '100%',
@@ -53,14 +71,14 @@ export default () => {
                     }} />
 
                     <div style={secondaryGridStyle}>
-                        <img src='/src/assets/img/carro2.jpeg' style={secondaryimgSize} />
-                        <img src='/src/assets/img/carro.jpeg' style={secondaryimgSize} />
+                        <img src={otherImages[0] || ""} style={secondaryimgSize} />
+                        <img src={otherImages[1] || ""} style={secondaryimgSize} />
 
                     </div>
 
                     <div style={secondaryGridStyle}>
-                        <img src='/src/assets/img/carro.jpeg' style={secondaryimgSize} />
-                        <img src='/src/assets/img/carro2.jpeg' style={{
+                        <img src={otherImages[2] || ""} style={secondaryimgSize} />
+                        <img src={otherImages[3] || ""} style={{
                             ...secondaryimgSize,
                             filter: 'brightness(25%)',
                             cursor: 'pointer'
@@ -96,7 +114,7 @@ export default () => {
                         background: ColorTheme.item
                     }}>
                         <div className="left-box">
-                            <SwapHorizIcon /> Aceita troca
+                            <SwapHorizIcon /> {!!vehicle.is_trade_accepted ? 'Aceita troca' : 'Não aceita troca'}
                         </div>
                         <div className="right-box">
                             <RequestQuoteIcon /> Financia
@@ -124,17 +142,24 @@ export default () => {
                             gap: '0.5rem'
                         }}>
                             <div className='model-and-brand' style={{ fontWeight: 'bold' }}>
-                                VolksWagen T-Cross
+                                {vehicle.brand} {vehicle.model}
                             </div>
                             <div className='description'>
-                                1.4 TSI Highline AT Flex
+                                {vehicle.description}
                             </div>
                         </div>
 
                         <div className='old-value'>
-                            de <strong style={{ color: ColorTheme.badText, textDecoration: 'line-through' }}>R$ 124.990</strong>
+                            de <strong
+                                style={{
+                                    color: ColorTheme.badText,
+                                    textDecoration: 'line-through'
+                                }}>{convertNumberToMoney(vehicle.old_price || vehicle.price)}
+                            </strong>
                         </div>
-                        <div className='new-value'>por <strong style={{ color: ColorTheme.goodText }}>R$ 119.990</strong></div>
+                        <div className='new-value'>por
+                            <strong style={{ color: ColorTheme.goodText }}>{convertNumberToMoney(vehicle.price)}</strong>
+                        </div>
 
                     </div>
 
@@ -151,18 +176,7 @@ export default () => {
                             DESCRIÇÃO
                         </p>
                         <div className='description-box-text' style={{ display: 'flex', width: '70%', }}>
-                            Aqui esta uma longa
-                            Aqui esta uma longa descricao
-                            Aqui esta uma longa descricao
-                            Aqui esta uma longa descricao
-                            Aqui esta uma longa descricao
-                            Aqui esta uma longa descricao
-                            Aqui esta uma longa descricao
-                            Aqui esta uma longa descricao
-                            Aqui esta uma longa descricao
-                            Aqui esta uma longa descricao
-                            Aqui esta uma longa descricao
-                            Aqui esta uma longa descricao
+                            {vehicle.long_description || ''}
                         </div>
 
                     </div>
@@ -184,12 +198,21 @@ export default () => {
                             width: '60%',
                             fontSize: FontSize.title
                         }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><SettingsSuggestIcon /><p>Automatico</p></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><SettingsSuggestIcon /><p>2020/2021</p></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><SettingsSuggestIcon /><p>60.968 km</p></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><SettingsSuggestIcon /><p>Cinza</p></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><SettingsSuggestIcon /><p>Flex</p></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><SettingsSuggestIcon /><p>Flex</p></div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><SettingsSuggestIcon />
+                                <p>{translateGear(vehicle.gear)}</p>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><CalendarMonth />
+                                <p>{vehicle.year}/{vehicle.model_year}</p>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><EditRoadIcon />
+                                <p>{vehicle.km} km</p>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><ColorLens />
+                                <p>{vehicle.color || 'NÃO INFORMADO'}</p>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><LocalGasStation />
+                                <p>{translateFuel(vehicle.fuel)}</p>
+                            </div>
 
                         </div>
 
@@ -212,18 +235,28 @@ export default () => {
                             width: '60%',
                             fontSize: FontSize.title
                         }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><CheckIcon /><p>Banco de couro</p></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><CheckIcon /><p>Rodas de liga leve</p></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><CheckIcon /><p>Chave presença</p></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><CheckIcon /><p>Limpador traseiro</p></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><CheckIcon /><p>Start/Stop</p></div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><CheckIcon /><p>Vidros elétricos traseiros</p></div>
+                            {
+                                vehicle.optionals.map(
+                                    optional => {
+                                        return (
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '0.2rem'
+                                                }}><CheckIcon />
+                                                <p>{optional}</p>
+                                            </div>
+                                        )
+                                    }
+                                )
+                            }
                         </div>
 
                     </div>
                 </div>
             </div>
-            
+
             <Footer />
 
 
