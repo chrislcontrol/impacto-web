@@ -13,3 +13,12 @@ export async function listVehicles(): Promise<RemoteVehicleResponse> {
             throw error
         })
 }
+
+
+export async function retrieveVehicle(vehicleId: string) {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
+    return fetch(`${backendUrl}/api/v1/vehicles/${vehicleId}`).then(rsp => {
+        if (!!rsp.ok) return rsp.json()
+        throw rsp
+    }).catch(error => {throw error})
+}

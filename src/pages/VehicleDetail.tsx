@@ -4,31 +4,69 @@ import EditRoadIcon from '@mui/icons-material/EditRoad';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import { CSSProperties } from "react";
-import { useNavigate } from 'react-router-dom';
+import { CSSProperties, useEffect, useState } from "react";
+import { generatePath, useNavigate, useParams } from 'react-router-dom';
 import ColorTheme from "../ColorTheme";
 import FontSize from "../FontSize";
 import Footer from '../components/Footer';
 import { Header } from '../components/Header';
+import Loading from '../components/Loading';
+import { sessionStorageKeys } from '../constants';
+import { retrieveVehicle } from '../providers/vehicles';
 import { Vehicle } from '../types';
+import urls from '../urls';
 import { convertNumberToMoney, getSelectedVehicle, translateFuel, translateGear } from '../utils';
 
+export type UrlPath = {
+    vehicleId: string
+}
+
 export default () => {
+    const [vehicle, setVehicle] = useState<Vehicle | undefined>(getSelectedVehicle())
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const pathVehicleId = useParams<UrlPath>().vehicleId
+
+    if (!pathVehicleId) {
+        throw 'invalid vehicleId.'
+    }
+
     const navigate = useNavigate()
-    const vehicle: Vehicle = getSelectedVehicle()
 
-    if (!Object.keys(vehicle)) { return navigate(-1) }
 
-    function listImagesByIsMain(isMain: boolean) {
+    function listImagesByIsMain(isMain: boolean, vehicle: Vehicle) {
         return !!vehicle.images.length ? vehicle.images.filter(
             img => { return img.is_main === isMain }
         ) : []
     }
 
-    const filteredVehiclesImagesByMain = listImagesByIsMain(true)
+    useEffect(() => {
+        if (!!isLoading) return
+        if (!vehicle) return
+        if (pathVehicleId != vehicle.id) {
+            setIsLoading(true)
+            retrieveVehicle(pathVehicleId)
+                .then(
+                    remoteVehicle => {
+                        setVehicle(remoteVehicle)
+                        sessionStorage.setItem(sessionStorageKeys.selectedVehicle, JSON.stringify(vehicle))
+                    }
+                )
+                .catch(error => {
+                    console.log(error)
+                    setVehicle(undefined)
+                }
 
+                )
+                .finally(() => setIsLoading(false))
+        }
+    }, [vehicle])
+
+    if (isLoading === true) return <div><Loading /></div>
+    if (!vehicle) return <div>Failed to load content.</div>
+
+    const filteredVehiclesImagesByMain = listImagesByIsMain(true, vehicle)
     const mainVehicleImage = !!filteredVehiclesImagesByMain.length ? filteredVehiclesImagesByMain[0].image : ''
-    const otherImages = listImagesByIsMain(false).map(item => item.image)
+    const otherImages = listImagesByIsMain(false, vehicle).map(item => item.image)
 
     const secondaryimgSize = {
         height: '300px',
@@ -84,7 +122,7 @@ export default () => {
                             cursor: 'pointer'
                         }} />
                         <div className='text-over-img'
-                            onClick={() => navigate('/detalhes/imagens')}
+                            onClick={() => navigate(generatePath(urls.detalhesImagens, {vehicleId: vehicle.id}))}
                             style={{
                                 position: 'absolute',
                                 bottom: '150px',

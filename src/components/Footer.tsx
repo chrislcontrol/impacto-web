@@ -38,7 +38,7 @@ export default function Footer() {
                 margin: '0 10% 0 0'
             }}>
                 <div style={{ fontSize: FontSize.super, color: ColorTheme.primary }}><h1>Impacto Automoveis</h1></div>
-                <p style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '2rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '2rem' }}>
                     <div style={styles.infoBoxRowStyle}>
                         <LocationOn style={{ color: 'red', fontSize: FontSize.main * 2 }} />
                         <HyperLink href='https://www.google.com/maps?ll=-27.597961,
@@ -47,19 +47,20 @@ export default function Footer() {
                             text="R. Francisco Antônio da Silva, 20 - Sertão do Maruim, São José - SC, 88122-010" />
                     </div>
 
-                    {phoneNumbers.map(
-                        phone => {
-                            return (
-                                <div style={styles.infoBoxRowStyle}>
-                                    <WhatsApp style={{ color: 'green', fontSize: FontSize.main * 2 }} />
-                                    <HyperLink
-                                        href={'https://api.whatsapp.com/send?phone=55' + phone}
-                                        text={`(${phone.substring(0, 2)})${phone.substring(2, 7)}-${phone.substring(7)}`} />
-                                </div>
-                            )
-                        }
-                    )}
-                </p>
+                    {
+                        phoneNumbers.map(
+                            (phone, index) => {
+                                return (
+                                    <div key={index} style={styles.infoBoxRowStyle}>
+                                        <WhatsApp style={{ color: 'green', fontSize: FontSize.main * 2 }} />
+                                        <HyperLink
+                                            href={'https://api.whatsapp.com/send?phone=55' + phone}
+                                            text={`(${phone.substring(0, 2)})${phone.substring(2, 7)}-${phone.substring(7)}`} />
+                                    </div>
+                                )
+                            }
+                        )}
+                </div>
             </div>
         </div>
     )

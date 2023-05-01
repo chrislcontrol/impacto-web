@@ -5,5 +5,6 @@ export default {
     item: '#151B24', 
     text: 'white',
     goodText: '#C3FB64', 
-    badText: 'red'
+    badText: 'red',
+    background: 'black'
 }

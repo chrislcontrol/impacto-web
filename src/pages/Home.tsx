@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Footer from "../components/Footer"
 import { Header } from "../components/Header"
 import { VehicleGrid } from "../components/VehicleGrid"
@@ -7,11 +7,15 @@ import { Vehicle } from "../types"
 
 export function Home() {
     const [vehicles, setVehicles] = useState<Vehicle[]>([])
-    listVehicles()
-        .then(
-            vehiclesJson => { setVehicles(vehiclesJson.results) }
-        )
 
+    useEffect(() => {
+        listVehicles()
+            .then(
+                vehiclesJson => { setVehicles(vehiclesJson.results) }
+            )
+    }, []
+
+    )
 
     return (
         <div>

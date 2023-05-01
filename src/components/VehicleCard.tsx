@@ -2,11 +2,13 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SpeedIcon from '@mui/icons-material/Speed';
 import { Button } from "@mui/material";
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 import ColorTheme from "../ColorTheme";
 import FontSize from "../FontSize";
 import { Vehicle } from "../types";
 import { convertNumberToMoney } from '../utils';
+import { sessionStorageKeys } from '../constants';
+import urls from '../urls';
 
 export function VehicleCard(vehicle: Vehicle) {
   const price = convertNumberToMoney(vehicle.price)
@@ -14,13 +16,13 @@ export function VehicleCard(vehicle: Vehicle) {
 
   const shadow = {
     default: `0px 5px 10px ${ColorTheme.primary}`,
-    focus: `20px 20px 100px 1px ${ColorTheme.primary}`,
+    focus: `2px 3px 10px 1px ${ColorTheme.primary}`,
   }
   const [currentShadow, setCurrentShadow] = useState(shadow.default)
   const navigate = useNavigate()
   const navigateToDetails = () => {
-    sessionStorage.setItem('selectedVehicle', JSON.stringify(vehicle))
-    navigate('/detalhes')
+    sessionStorage.setItem(sessionStorageKeys.selectedVehicle, JSON.stringify(vehicle))
+    navigate(generatePath(urls.detalhes, {vehicleId: vehicle.id}))
   }
 
   return (
