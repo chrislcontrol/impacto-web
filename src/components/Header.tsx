@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ColorTheme from "../ColorTheme";
-import { phoneNumbers } from "../constants";
+import urls from "../urls";
 
 export function Header() {
     const navigate = useNavigate()
@@ -19,7 +19,7 @@ export function Header() {
             </div>
 
             <div
-                onClick={() => navigate('/')}
+                onClick={() => navigate(urls.home)}
                 style={{
                     justifyContent: 'center',
                     display: 'flex', 
@@ -27,7 +27,7 @@ export function Header() {
                     margin: '3rem 0'
                 }}
             >
-                <img src='/src/assets/img/logo.jpeg' style={{
+                <img src='/images/logo.jpeg' style={{
                     width: '60%'
                 }} />
             </div>
