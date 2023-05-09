@@ -17,4 +17,5 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_IMPACTO_WEB_DEV }}'
           channelId: live
-          projectId: impacto-automoveis-prd
+          projectId: impacto-automoveis-prd-71f40
+          target: impacto-automoveis-prd-71f40
