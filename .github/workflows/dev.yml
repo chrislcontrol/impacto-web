@@ -18,4 +18,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_IMPACTO_WEB_DEV }}'
           channelId: live
           projectId: impacto-web-dev
-          appId: 1:692090517295:web:8deb69eceed94fe7e1d3da
