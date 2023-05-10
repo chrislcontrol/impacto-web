@@ -16,6 +16,5 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_IMPACTO_WEB_DEV }}'
-          channelId: live
           projectId: impacto-web-dev
-          target: impacto-web-dev
+          channelId: default
