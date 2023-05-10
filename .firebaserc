@@ -1,6 +1,5 @@
 {
   "projects": {
-    "default": "impacto-web-dev", 
-    "production": "impacto-automoveis-prd-71f40"
+    "default": "impacto-automoveis-prd-71f40"
   }
 }
