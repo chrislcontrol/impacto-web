@@ -1,6 +1,22 @@
 {
   "projects": {
-    "default": "impacto-web-dev", 
-    "production": "impacto-automoveis-prd-71f40"
+    "development": "impacto-web-dev", 
+    "production": "impactoautomoveis"
+  }, 
+  "targets": {
+    "development": {
+      "hosting": {
+        "myapp": [
+          "impacto-web-dev"
+        ]
+      }
+    },
+    "myapp-dev": {
+      "hosting": {
+        "myapp": [
+          "impacto-automoveis-prd-71f40"
+        ]
+      }
+    }
   }
 }
