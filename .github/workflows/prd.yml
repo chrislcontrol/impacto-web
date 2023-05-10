@@ -18,3 +18,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_IMPACTO_WEB_PRD }}'
           projectId: impacto-automoveis-prd-71f40
           channelId: production
+          target: impactoautomoveis
