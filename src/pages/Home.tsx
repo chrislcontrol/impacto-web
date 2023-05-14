@@ -19,17 +19,23 @@ export function Home() {
     )
 
     return (
-        <div>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column', 
+            justifyContent: 'space-between', 
+            gap: '10vh'
+        }}>
             <Header />
-            <div className='container' style={{
+            <div style={{
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column', 
+                justifyContent: 'center',
+                width: '80%', 
+                marginLeft: '10%'
             }}>
-                <div className='vehicle-grid'>
-                    <VehicleGrid vehicles={vehicles} />
-                </div>
-
+                <VehicleGrid vehicles={vehicles} />
             </div>
+
             <Footer />
             <WhatsappFixed />
         </div>

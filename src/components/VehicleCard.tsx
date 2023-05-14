@@ -37,11 +37,13 @@ export function VehicleCard(vehicle: Vehicle) {
         color: ColorTheme.text,
         fontSize: FontSize.main,
         boxShadow: currentShadow,
-        width: '32%',
-        height: '30%',
+        width: '31%',
+        maxWidth: '26%',
+        minWidth: '31vh',
+        minHeight: '85vh',
+        height: 'auto',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        margin: '0.5%',
       }}>
       <div className='vehicle-img' style={{
         display: 'flex',
@@ -51,14 +53,11 @@ export function VehicleCard(vehicle: Vehicle) {
       }}>
         <img
           style={{
-            borderRadius: '0.5rem 0.5rem 0rem 0rem',
-            cursor: 'pointer',
-            minWidth: '20rem',
-            maxWidth: '36.45rem',
-            minHeight: '25rem',
-            maxHeight: '25rem',
+            borderRadius: '1rem 1rem 0rem 0rem',
+            cursor: 'pointer', 
+            objectFit: 'scale-down'
           }}
-          src={!!vehicle.images.length ? vehicle.images.filter(imageObject => { return imageObject.is_main })[0].image : ''}
+          src={!!vehicle.images.length ? vehicle.images.filter(imageObject => { return imageObject.is_main })[0].image : '/images/noimage.svg'}
           alt={`${vehicle.brand} ${vehicle.model}`}
           onClick={navigateToDetails}
         />

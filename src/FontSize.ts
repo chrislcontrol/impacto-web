@@ -1,6 +1,7 @@
 export default {
-    main: 20,
-    title: 22,
-    grand: 24,
-    super: 26
+    main: '2vh',
+    doubleMain: '4vh',
+    title: '2.2vh',
+    grand: '2.4vh',
+    super: '2.6vh'
 }

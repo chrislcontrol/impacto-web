@@ -18,29 +18,32 @@ export default function Footer() {
 
     return (
         <div className='footer' style={{
-            flexDirection: 'row',
             display: 'flex',
             justifyContent: 'space-between',
-            gap: '1%',
+            gap: '5%',
             borderTop: `solid ${ColorTheme.primary}`,
-            paddingTop: '1%',
-            backgroundColor: ColorTheme.item
+            paddingTop: '5%',
+            backgroundColor: ColorTheme.item,
+            flexWrap: 'wrap'
         }}>
             <div className='footer.address' style={{
-                width: '50%',
-                height: '15%'
+                width: '45%',
+                height: 'auto'
             }}>
                 <AddressMap />
             </div>
             <div className='footer.data' style={{
-                color: ColorTheme.text, display: 'flex',
+                color: ColorTheme.text,
+                display: 'flex',
                 flexDirection: 'column',
-                margin: '0 10% 0 0'
+                justifyContent: 'left', 
+                textAlign: 'left',
+                width: '50%'
             }}>
                 <div style={{ fontSize: FontSize.super, color: ColorTheme.primary }}><h1>Impacto Automoveis</h1></div>
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '2rem' }}>
                     <div style={styles.infoBoxRowStyle}>
-                        <LocationOn style={{ color: 'red', fontSize: FontSize.main * 2 }} />
+                        <LocationOn style={{ color: 'red', fontSize: FontSize.doubleMain }} />
                         <HyperLink href='https://www.google.com/maps?ll=-27.597961,
                     -48.677437&z=18&t=m&hl=pt-BR&gl=BR&mapclient=embed&q=R.+Francisco+Ant%C3%B4nio+da+Silva,
                     +20+-+Sert%C3%A3o+do+Maruim+S%C3%A3o+Jos%C3%A9+-+SC+88122-010'
@@ -52,7 +55,7 @@ export default function Footer() {
                             (phone, index) => {
                                 return (
                                     <div key={index} style={styles.infoBoxRowStyle}>
-                                        <WhatsApp style={{ color: 'green', fontSize: FontSize.main * 2 }} />
+                                        <WhatsApp style={{ color: 'green', fontSize: FontSize.main }} />
                                         <HyperLink
                                             href={'https://api.whatsapp.com/send?phone=55' + phone}
                                             text={`(${phone.substring(0, 2)})${phone.substring(2, 7)}-${phone.substring(7)}`} />
