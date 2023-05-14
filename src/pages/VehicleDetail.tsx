@@ -16,6 +16,7 @@ import { retrieveVehicle } from '../providers/vehicles';
 import { Vehicle } from '../types';
 import urls from '../urls';
 import { convertNumberToMoney, getSelectedVehicle, translateFuel, translateGear } from '../utils';
+import WhatsappFixed from '../components/WhatsappFixed';
 
 export type UrlPath = {
     vehicleId: string
@@ -296,6 +297,7 @@ export default () => {
             </div>
 
             <Footer />
+            <WhatsappFixed />
 
 
         </div>

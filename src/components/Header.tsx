@@ -10,7 +10,8 @@ export function Header() {
             <div
                 style={{
                     textAlign: 'right',
-                    padding: '1rem 1rem 1rem 1rem',
+                    padding: '1rem',
+                    marginRight: '10%',
                     fontSize: 20,
                     color: ColorTheme.text
                 }}
@@ -24,11 +25,11 @@ export function Header() {
                     justifyContent: 'center',
                     display: 'flex', 
                     cursor: 'pointer', 
-                    margin: '3rem 0'
                 }}
             >
                 <img src='/images/logo.jpeg' style={{
-                    width: '60%'
+                    width: '100%', 
+                    maxWidth: '120vh'
                 }} />
             </div>
         </div>

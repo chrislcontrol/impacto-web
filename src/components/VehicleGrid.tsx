@@ -10,9 +10,9 @@ export function VehicleGrid(props: VehicleProps) {
         <div className='vehicle-grid' style={{
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'left',
-            alignContent: 'left',
-            margin: '0 2.2% 5% 2.2%'
+            justifyContent: 'center',
+            width: '100%', 
+            gap: '1rem'
         }}>
             {
                 props.vehicles.map(
