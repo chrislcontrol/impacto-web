@@ -4,6 +4,7 @@ import { Header } from "../components/Header"
 import { VehicleGrid } from "../components/VehicleGrid"
 import { listVehicles } from "../providers/vehicles"
 import { Vehicle } from "../types"
+import WhatsappFixed from "../components/WhatsappFixed"
 
 export function Home() {
     const [vehicles, setVehicles] = useState<Vehicle[]>([])
@@ -30,6 +31,7 @@ export function Home() {
 
             </div>
             <Footer />
+            <WhatsappFixed />
         </div>
     )
 }
