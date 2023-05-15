@@ -19,16 +19,18 @@ export default function Footer() {
     return (
         <div className='footer' style={{
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'space-between',
             gap: '5%',
             borderTop: `solid ${ColorTheme.primary}`,
-            paddingTop: '5%',
+            padding: '5% 10%',
             backgroundColor: ColorTheme.item,
             flexWrap: 'wrap'
         }}>
             <div className='footer.address' style={{
-                width: '45%',
-                height: 'auto'
+                width: '100%',
+                maxHeight: '30vh',
+                overflow: 'hidden',
             }}>
                 <AddressMap />
             </div>
@@ -38,10 +40,10 @@ export default function Footer() {
                 flexDirection: 'column',
                 justifyContent: 'left', 
                 textAlign: 'left',
-                width: '50%'
+                width: '100%'
             }}>
                 <div style={{ fontSize: FontSize.super, color: ColorTheme.primary }}><h1>Impacto Automoveis</h1></div>
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '2rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '20px' }}>
                     <div style={styles.infoBoxRowStyle}>
                         <LocationOn style={{ color: 'red', fontSize: FontSize.doubleMain }} />
                         <HyperLink href='https://www.google.com/maps?ll=-27.597961,

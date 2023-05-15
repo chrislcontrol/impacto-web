@@ -17,6 +17,7 @@ import { Vehicle } from '../types';
 import urls from '../urls';
 import { convertNumberToMoney, getSelectedVehicle, translateFuel, translateGear } from '../utils';
 import WhatsappFixed from '../components/WhatsappFixed';
+import { ImageList, ImageListItem } from '@mui/material';
 
 export type UrlPath = {
     vehicleId: string
@@ -60,7 +61,7 @@ export default () => {
                 )
                 .finally(() => setIsLoading(false))
         }
-    }, [vehicle])
+    }, [])
 
     if (isLoading === true) return <div><Loading /></div>
     if (!vehicle) return <div>Failed to load content.</div>
@@ -69,85 +70,72 @@ export default () => {
     const mainVehicleImage = !!filteredVehiclesImagesByMain.length ? filteredVehiclesImagesByMain[0].image : ''
     const otherImages = listImagesByIsMain(false, vehicle).map(item => item.image)
 
-    const secondaryimgSize = {
-        height: '300px',
-        width: '450px',
-        border: 'solid ' + ColorTheme.item
-    }
-    const secondaryGridStyle: CSSProperties = {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        width: '25%',
-        alignItems: 'center'
-
-    }
-
     return (
-        <div>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            justifyContent: 'center',
+            color: ColorTheme.text,
+            fontSize: FontSize.title,
+            background: ColorTheme.item,
+            textAlign: 'left', 
+            borderRight: 'solid ' + ColorTheme.primary, 
+            borderLeft: 'solid ' + ColorTheme.primary, 
+            borderWidth: 'thin'
+            
+        }}>
             <Header />
 
-            <div
-                className='container'
-                style={{
+            <div>
+
+                <ImageList
+                    sx={{ width: '100%', height: '60vh' }}
+                    variant="standard"
+                    cols={4}
+                    style={{ cursor: 'pointer' }}
+
+                >
+                    <ImageListItem key={mainVehicleImage} cols={2} rows={2}>
+                        <img src={mainVehicleImage}
+                            onClick={
+                                () => {
+                                    navigate(generatePath(urls.detalhesImagens, { vehicleId: vehicle.id }))
+                                }
+                            } />
+                    </ImageListItem>
+                    {
+                        otherImages.map(img => {
+                            return (
+                                <ImageListItem key={mainVehicleImage} cols={1} rows={1}>
+                                    <img src={img}
+                                        onClick={
+                                            () => {
+                                                navigate(generatePath(urls.detalhesImagens, { vehicleId: vehicle.id }))
+                                            }
+                                        } />
+                                </ImageListItem>
+                            )
+                        })
+                    }
+
+                </ImageList>
+
+                <div className='other-elements' style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    color: ColorTheme.text,
-                    fontSize: FontSize.title,
-                    background: ColorTheme.item
+                    rowGap: '20px',
+                    width: '100%',
                 }}>
-
-                <div style={{
-                    border: 'solid ' + ColorTheme.primary,
-                    display: 'flex',
-                    alignItems: 'center'
-                }}>
-                    <img className='extend-fluid-md' src={mainVehicleImage} style={{
-                        height: '607px',
-                        width: '960px',
-                        maxHeight: '100%',
-                        maxWidth: '50%',
-                    }} />
-
-                    <div style={secondaryGridStyle}>
-                        <img src={otherImages[0] || ""} style={secondaryimgSize} />
-                        <img src={otherImages[1] || ""} style={secondaryimgSize} />
-
-                    </div>
-
-                    <div style={secondaryGridStyle}>
-                        <img src={otherImages[2] || ""} style={secondaryimgSize} />
-                        <img src={otherImages[3] || ""} style={{
-                            ...secondaryimgSize,
-                            filter: 'brightness(25%)',
-                            cursor: 'pointer'
-                        }} />
-                        <div className='text-over-img'
-                            onClick={() => navigate(generatePath(urls.detalhesImagens, {vehicleId: vehicle.id}))}
-                            style={{
-                                position: 'absolute',
-                                bottom: '150px',
-                                fontSize: FontSize.grand,
-                                cursor: 'pointer',
-                                fontWeight: 'bold'
-                            }}>
-                            Ver todas as fotos
-                        </div>
-
-                    </div>
-
-                </div>
-                <div className='other-elements'>
 
                     <div className='boxes' style={{
                         color: ColorTheme.primary,
                         display: 'flex',
                         justifyContent: 'space-around',
                         fontSize: FontSize.super,
-                        padding: '1rem 0',
+                        padding: '3% 0',
                         border: 'solid ' + ColorTheme.primary,
                         borderWidth: 'thin',
-                        borderSpacing: '10rem',
                         fontWeight: 'bold',
                         alignItems: 'center',
                         background: ColorTheme.item
@@ -160,82 +148,87 @@ export default () => {
                         </div>
                     </div>
 
-                    <div className='vehicle-info'
-                        style={{
-                            color: ColorTheme.text,
-                            display: 'flex',
-                            textAlign: 'left',
-                            alignItems: 'center',
-                            justifyContent: 'flex-start',
-                            gap: '3rem',
-                            padding: '2rem 10rem',
-                            fontSize: FontSize.super,
-                            background: ColorTheme.item,
-                        }}>
+                    <div className='vehicle-info' style={{
+                        color: ColorTheme.text,
+                        display: 'flex',
+                        textAlign: 'left',
+                        justifyContent: 'left',
+                        fontSize: FontSize.super,
+                        background: ColorTheme.item,
+                        flexWrap: 'wrap',
+                        width: '80%',
+                        rowGap: '20px',
+                        padding: '0 10%',
+                    }}>
 
                         <div className='vehicle-model-and-description' style={{
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            marginRight: '5rem',
-                            gap: '0.5rem'
+                            textAlign: 'left',
                         }}>
-                            <div className='model-and-brand' style={{ fontWeight: 'bold' }}>
+                            <div className='model-and-brand' style={{ fontWeight: 'bold', fontSize: FontSize.super }}>
                                 {vehicle.brand} {vehicle.model}
                             </div>
-                            <div className='description'>
+                            <div className='description' style={{ fontSize: FontSize.grand }}>
                                 {vehicle.description}
+                            </div>
+
+                            <div className='values' style={{ display: 'flex', flexWrap: 'wrap', marginTop: '10%', gap: '25px' }}>
+                                <div className='old-value'>
+                                    de <strong
+                                        style={{
+                                            color: ColorTheme.badText,
+                                            textDecoration: 'line-through'
+                                        }}>{convertNumberToMoney(vehicle.old_price || vehicle.price)}
+                                    </strong>
+                                </div>
+                                <div className='new-value'>por <strong
+                                    style={{ color: ColorTheme.goodText }}>{convertNumberToMoney(vehicle.price)}</strong>
+                                </div>
                             </div>
                         </div>
 
-                        <div className='old-value'>
-                            de <strong
-                                style={{
-                                    color: ColorTheme.badText,
-                                    textDecoration: 'line-through'
-                                }}>{convertNumberToMoney(vehicle.old_price || vehicle.price)}
-                            </strong>
-                        </div>
-                        <div className='new-value'>por
-                            <strong style={{ color: ColorTheme.goodText }}>{convertNumberToMoney(vehicle.price)}</strong>
-                        </div>
 
                     </div>
 
                     <div className='description-box' style={{
-                        padding: '2rem 10rem 4rem 10rem',
                         borderTop: 'solid ' + ColorTheme.primary,
-                        borderBottom: 'solid ' + ColorTheme.primary,
                         borderWidth: 'thin',
-                        justifyContent: 'center',
-                        alignItems: 'center'
+                        alignContent: 'left',
+                        textAlign: 'left',
+                        alignItems: 'left',
+                        flexWrap: 'wrap',
+                        width: '80%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        padding: '5% 10%'
 
                     }}>
-                        <p className='description-box-title' style={{ display: 'flex', fontSize: FontSize.grand }}>
+                        <p className='description-box-title' style={{ fontSize: FontSize.grand, fontWeight: 'bold' }}>
                             DESCRIÇÃO
                         </p>
-                        <div className='description-box-text' style={{ display: 'flex', width: '70%', }}>
-                            {vehicle.long_description || ''}
+                        <div className='description-box-text'>
+                            {vehicle.long_description || 'Here long description bla bla bla'}
                         </div>
 
                     </div>
 
                     <div className='data-sheet'
                         style={{
-                            padding: '2rem 10rem',
                             borderTop: 'solid ' + ColorTheme.primary,
-                            borderBottom: 'solid ' + ColorTheme.primary,
-                            borderWidth: 'thin'
+                            borderWidth: 'thin',
+                            paddingLeft: "10%"
 
                         }}>
                         <p style={{ fontSize: FontSize.grand }}>FICHA TÉCNICA</p>
                         <div className='data-sheet-itens' style={{
                             display: 'flex',
                             flexWrap: 'wrap',
-                            justifyContent: 'space-between',
-                            gap: '30%',
-                            width: '60%',
-                            fontSize: FontSize.title
+                            justifyContent: 'left',
+                            textAlign: 'left',
+                            gap: '10%',
+                            width: '100%',
+                            fontSize: FontSize.title,
                         }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}><SettingsSuggestIcon />
                                 <p>{translateGear(vehicle.gear)}</p>
@@ -259,20 +252,22 @@ export default () => {
 
                     <div className='optionals'
                         style={{
-                            padding: '2rem 10rem',
+                            padding: '0 10%',
                             borderTop: 'solid ' + ColorTheme.primary,
                             borderBottom: 'solid ' + ColorTheme.primary,
-                            borderWidth: 'thin'
+                            borderWidth: 'thin',
+                            display: 'flex',
+                            flexDirection: 'column'
 
                         }}>
-                        <p className='opcionals-title' style={{ fontSize: FontSize.grand }}>OPCIONAIS</p>
+                        <p className='optionals-title' style={{ fontSize: FontSize.grand, fontWeight: 'bold' }}>OPCIONAIS</p>
                         <div className='data-sheet-itens' style={{
                             display: 'flex',
                             flexWrap: 'wrap',
-                            justifyContent: 'space-between',
-                            gap: '10%',
-                            width: '60%',
-                            fontSize: FontSize.title
+                            justifyContent: 'left',
+                            width: '100%',
+                            fontSize: FontSize.main,
+                            gap: '10px'
                         }}>
                             {
                                 vehicle.optionals.map(
@@ -282,7 +277,9 @@ export default () => {
                                                 style={{
                                                     display: 'flex',
                                                     alignItems: 'center',
-                                                    gap: '0.2rem'
+                                                    gap: '0.2rem',
+                                                    flexWrap: 'wrap',
+                                                    width: '30%'
                                                 }}><CheckIcon />
                                                 <p>{optional}</p>
                                             </div>
