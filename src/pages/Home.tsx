@@ -5,6 +5,7 @@ import { VehicleGrid } from "../components/VehicleGrid"
 import { listVehicles } from "../providers/vehicles"
 import { Vehicle } from "../types"
 import WhatsappFixed from "../components/WhatsappFixed"
+import ColorTheme from "../ColorTheme"
 
 export function Home() {
     const [vehicles, setVehicles] = useState<Vehicle[]>([])
@@ -23,7 +24,11 @@ export function Home() {
             display: 'flex',
             flexDirection: 'column', 
             justifyContent: 'space-between', 
-            gap: '10vh'
+            gap: '10vh', 
+            backgroundColor: ColorTheme.item,
+            borderRight: 'solid ' + ColorTheme.primary, 
+            borderLeft: 'solid ' + ColorTheme.primary, 
+            borderWidth: 'thin'
         }}>
             <Header />
             <div style={{

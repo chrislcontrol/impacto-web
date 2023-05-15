@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import ColorTheme from "../ColorTheme";
 import urls from "../urls";
+import FontSize from "../FontSize";
 
 export function Header() {
     const navigate = useNavigate()
@@ -10,9 +11,9 @@ export function Header() {
             <div
                 style={{
                     textAlign: 'right',
-                    padding: '1rem',
+                    padding: '2%',
                     marginRight: '10%',
-                    fontSize: 20,
+                    fontSize: FontSize.super,
                     color: ColorTheme.text
                 }}
             >
@@ -29,7 +30,8 @@ export function Header() {
             >
                 <img src='/images/logo.jpeg' style={{
                     width: '100%', 
-                    maxWidth: '120vh'
+                    maxWidth: '120vh', 
+                    borderRadius: '20px'
                 }} />
             </div>
         </div>

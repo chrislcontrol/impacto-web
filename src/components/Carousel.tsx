@@ -17,7 +17,7 @@ export default function Carousel(props: CarouselProps) {
   const buttonStyle: CSSProperties = {
     cursor: 'pointer',
     color: ColorTheme.primary,
-    fontSize: 60
+    fontSize: FontSize.doubleMain
   }
   const buttonMouseHoverHighlight: CSSProperties = {
     filter: 'brightness(200%)'
@@ -41,18 +41,18 @@ export default function Carousel(props: CarouselProps) {
     <div className='container' style={{
       display: 'flex',
       flexDirection: 'column',
-      color: ColorTheme.text, 
-      justifyContent: 'space-between',
-      gap: '1rem',
-      height: '45rem'
+      color: ColorTheme.text,
+      alignItems: 'center',
+      width: '100%',
+      height: 'auto',
+      overflow: 'hidden',
+      gap: '20px'
     }}>
       <div className='carousel' style={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-around',
-        width: '95rem',
-        height: '40rem',
-        padding: '0 4rem'
+        width: '100%', 
+        gap: '20px'
       }}>
         <ArrowCircleLeftRoundedIcon
           onClick={previousSlide}
@@ -61,8 +61,7 @@ export default function Carousel(props: CarouselProps) {
           onMouseLeave={() => setLeftButtonMouseHoverStyle({})}
         />
         <img className='carousel-image' src={slide.img} alt={'Slide ' + slide.img} style={{
-          width: '80%',
-          height: '100%',
+          width: '100%',
           borderRadius: '10px',
           border: 'solid ' + ColorTheme.primary
         }} />
@@ -73,16 +72,13 @@ export default function Carousel(props: CarouselProps) {
           onMouseLeave={() => setRightButtonMouseHoverStyle({})} />
       </div>
       <div className='counter' style={{
-        color: 'white', 
+        color: 'white',
         textAlign: 'center',
-        width: '95rem',
-        height: '40rem',
-        padding: '0 4rem', 
-        fontSize: FontSize.super, 
+        fontSize: FontSize.super,
         fontWeight: 'bold'
       }}>
         {slide.index + 1} / {props.slides.length}
-        </div>
+      </div>
     </div>
   )
 }
