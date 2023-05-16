@@ -45,14 +45,13 @@ export default function Carousel(props: CarouselProps) {
       alignItems: 'center',
       width: '100%',
       height: 'auto',
-      overflow: 'hidden',
-      gap: '20px'
+      gap: '20px', 
     }}>
       <div className='carousel' style={{
         display: 'flex',
         alignItems: 'center',
-        width: '100%', 
-        gap: '20px'
+        width: '100%',
+        justifyContent: 'center'
       }}>
         <ArrowCircleLeftRoundedIcon
           onClick={previousSlide}
@@ -61,7 +60,7 @@ export default function Carousel(props: CarouselProps) {
           onMouseLeave={() => setLeftButtonMouseHoverStyle({})}
         />
         <img className='carousel-image' src={slide.img} alt={'Slide ' + slide.img} style={{
-          width: '100%',
+          width: '95%',
           borderRadius: '10px',
           border: 'solid ' + ColorTheme.primary
         }} />
