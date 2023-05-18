@@ -1,3 +1,4 @@
+import { Vehicle } from "./types"
 
 export function translateGear(gear: string) {
     switch (gear) {
@@ -37,4 +38,18 @@ export function convertNumberToMoney(value: number) {
 export function getSelectedVehicle() {
     const stringVehicle = sessionStorage.getItem('selectedVehicle')
     return !!stringVehicle ? JSON.parse(stringVehicle) : {}
+}
+
+
+
+export function getMainImageOfVehicle(
+    { vehicle, defaultImage = '/images/noimage.svg' }: { vehicle: Vehicle, defaultImage?: string }
+): string {
+    if (!vehicle.images.length) return defaultImage
+
+    const filtered = vehicle.images.filter(imageObject => { return imageObject.is_main })
+
+    if (!!filtered.length) return filtered[0].image
+
+    return vehicle.images[0].image
 }

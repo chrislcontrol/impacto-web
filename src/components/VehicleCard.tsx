@@ -6,7 +6,7 @@ import { generatePath, useNavigate } from 'react-router-dom';
 import ColorTheme from "../ColorTheme";
 import FontSize from "../FontSize";
 import { Vehicle } from "../types";
-import { convertNumberToMoney } from '../utils';
+import { convertNumberToMoney, getMainImageOfVehicle } from '../utils';
 import { sessionStorageKeys } from '../constants';
 import urls from '../urls';
 
@@ -22,7 +22,7 @@ export function VehicleCard(vehicle: Vehicle) {
   const navigate = useNavigate()
   const navigateToDetails = () => {
     sessionStorage.setItem(sessionStorageKeys.selectedVehicle, JSON.stringify(vehicle))
-    navigate(generatePath(urls.detalhes, {vehicleId: vehicle.id}))
+    navigate(generatePath(urls.detalhes, { vehicleId: vehicle.id }))
   }
 
   return (
@@ -54,10 +54,10 @@ export function VehicleCard(vehicle: Vehicle) {
         <img
           style={{
             borderRadius: '1rem 1rem 0rem 0rem',
-            cursor: 'pointer', 
+            cursor: 'pointer',
             objectFit: 'scale-down'
           }}
-          src={!!vehicle.images.length ? vehicle.images.filter(imageObject => { return imageObject.is_main })[0].image : '/images/noimage.svg'}
+          src={getMainImageOfVehicle({vehicle})}
           alt={`${vehicle.brand} ${vehicle.model}`}
           onClick={navigateToDetails}
         />
