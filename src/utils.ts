@@ -43,7 +43,7 @@ export function getSelectedVehicle() {
 
 
 export function getMainImageOfVehicle(
-    { vehicle, defaultImage = '/images/noimage.svg' }: { vehicle: Vehicle, defaultImage?: string }
+    { vehicle, defaultImage = '/images/preparacao.jpg' }: { vehicle: Vehicle, defaultImage?: string }
 ): string {
     if (!vehicle.images.length) return defaultImage
 
