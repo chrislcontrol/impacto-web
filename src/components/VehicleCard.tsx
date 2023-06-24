@@ -60,6 +60,7 @@ export function VehicleCard(vehicle: Vehicle) {
           src={getMainImageOfVehicle({vehicle})}
           alt={`${vehicle.brand} ${vehicle.model}`}
           onClick={navigateToDetails}
+          loading='lazy'
         />
       </div>
 

@@ -59,7 +59,7 @@ export default function Carousel(props: CarouselProps) {
           onMouseEnter={() => setLeftButtonMouseHoverStyle(buttonMouseHoverHighlight)}
           onMouseLeave={() => setLeftButtonMouseHoverStyle({})}
         />
-        <img className='carousel-image' src={slide.img} alt={'Slide ' + slide.img} style={{
+        <img className='carousel-image' src={slide.img} loading='lazy' alt={'Slide ' + slide.img} style={{
           width: '95%',
           borderRadius: '10px',
           border: 'solid ' + ColorTheme.primary
