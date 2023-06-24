@@ -98,6 +98,7 @@ export default () => {
                 >
                     <ImageListItem key={mainVehicleImage} cols={2} rows={2}>
                         <img src={mainVehicleImage}
+                            loading='lazy'
                             onClick={
                                 () => {
                                     navigate(generatePath(urls.detalhesImagens, { vehicleId: vehicle.id }))

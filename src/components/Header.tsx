@@ -28,7 +28,7 @@ export function Header() {
                     cursor: 'pointer', 
                 }}
             >
-                <img src='/images/logo.jpeg' style={{
+                <img src='/images/logo.jpeg' loading='lazy' style={{
                     width: '100%', 
                     maxWidth: '120vh', 
                     borderRadius: '20px'
