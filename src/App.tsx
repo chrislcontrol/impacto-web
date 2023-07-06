@@ -7,7 +7,7 @@ function App() {
     <div>
       <noscript>
         <img height="1" width="1" style={{display: 'none'}}
-          src="https://www.facebook.com/tr?id=775144107599882&ev=PageView&noscript=1" />
+          src="https://www.facebook.com/tr?id=596724388976171&ev=PageView&noscript=1" />
       </noscript>
       <Root />
     </div>
