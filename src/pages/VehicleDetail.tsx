@@ -4,7 +4,7 @@ import EditRoadIcon from '@mui/icons-material/EditRoad';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import { CSSProperties, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { generatePath, useNavigate, useParams } from 'react-router-dom';
 import ColorTheme from "../ColorTheme";
 import FontSize from "../FontSize";
@@ -17,16 +17,35 @@ import { Vehicle } from '../types';
 import urls from '../urls';
 import { convertNumberToMoney, getSelectedVehicle, translateFuel, translateGear } from '../utils';
 import WhatsappFixed from '../components/WhatsappFixed';
-import { ImageList, ImageListItem } from '@mui/material';
+import { Button, ImageList, ImageListItem, TextField } from '@mui/material';
+import { sendContact } from '../providers/contacts';
+import ReactPhoneInput from 'react-phone-input-material-ui';
+import { toast } from 'react-toastify';
+import React from 'react';
 
 export type UrlPath = {
     vehicleId: string
 }
 
+
 export default () => {
     const [vehicle, setVehicle] = useState<Vehicle | undefined>(getSelectedVehicle())
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [name, setName] = useState<string | null>()
+    const [phone, setPhone] = useState<string | null>()
+    const [email, setEmail] = useState<string | null>(null)
+    const [city, setCity] = useState<string | null>()
+    const [state, setState] = useState<string | null>()
+    const [message, setMessage] = useState<string | null>()
+    const [nameError, setNameError] = useState<boolean>(false)
+    const [phoneError, setPhoneError] = useState<boolean>(false)
+    const [cityError, setCityError] = useState<boolean>(false)
+    const [stateError, setStateError] = useState<boolean>(false)
+    const [messageError, setMessageError] = useState<boolean>(false)
     const pathVehicleId = useParams<UrlPath>().vehicleId
+
+    const nameInput = React.useRef();
+
 
     if (!pathVehicleId) {
         throw 'invalid vehicleId.'
@@ -79,11 +98,11 @@ export default () => {
             color: ColorTheme.text,
             fontSize: FontSize.title,
             background: ColorTheme.item,
-            textAlign: 'left', 
-            borderRight: 'solid ' + ColorTheme.primary, 
-            borderLeft: 'solid ' + ColorTheme.primary, 
+            textAlign: 'left',
+            borderRight: 'solid ' + ColorTheme.primary,
+            borderLeft: 'solid ' + ColorTheme.primary,
             borderWidth: 'thin'
-            
+
         }}>
             <Header />
 
@@ -291,6 +310,190 @@ export default () => {
                         </div>
 
                     </div>
+
+                    <p style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '80%',
+                        fontSize: FontSize.title,
+                        alignItems: 'left',
+                        gap: '5px',
+                        padding: '0 10%',
+                    }}>Gostou deste veículo? Entre em contato:</p>
+
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '90%',
+                        fontSize: FontSize.main,
+                        alignItems: 'left',
+                        gap: '10px',
+                        paddingLeft: '10%',
+                        paddingBottom: '2%'
+                    }}>
+                        <TextField
+                            value={name}
+                            required
+                            id="outlined-required"
+                            error={nameError}
+                            helperText={!nameError ? null : 'Campo obrigatório'}
+                            label="Nome"
+                            style={{ width: '80%', background: 'white' }}
+                            onChange={(event) => {
+                                if (!!event.target.value) setNameError(false);
+                                setName(event.target.value)
+                            }}
+                        />
+                        <ReactPhoneInput
+                            value={phone}
+                            onChange={
+                                (value) => {
+                                    setPhone(value);
+                                    if (!!phone) setPhoneError(false);
+                                }
+                            }
+                            component={TextField}
+                            label='Fone'
+                            placeholder='(99) 99999-9999'
+                            country={'br'}
+                            autoFormat
+                            enableAreaCodes
+                            defaultMask={'(..) .....-....'}
+                            alwaysDefaultMask
+                            disableCountryCode
+                            defaultErrorMessage={'Campo obrigatório'}
+                            containerStyle={{ width: '80%', background: 'white' }}
+                            inputProps={{
+                                error: phoneError,
+                                helperText: !phoneError ? null : 'Campo obrigatório', 
+                                required: true
+                            }}
+                        />
+                        <TextField
+                            value={email}
+                            required={false}
+                            id="outlined-required"
+                            label="Email"
+                            style={{ width: '80%', background: 'white' }}
+                            onChange={
+                                (event) => {
+                                    setEmail(event.target.value);
+                                }
+                            }
+                        />
+                        <TextField
+                            value={city}
+                            required
+                            id="outlined-required"
+                            label="Cidade"
+                            error={cityError}
+                            helperText={!cityError ? null : 'Campo obrigatório'}
+                            style={{ width: '80%', background: 'white' }}
+                            onChange={
+                                (event) => {
+                                    setCity(event.target.value);
+                                    if (!!city) setCityError(false);
+                                }
+                            }
+                        />
+                        <TextField
+                            value={state}
+                            required
+                            id="outlined-required"
+                            label="UF"
+                            error={stateError}
+                            helperText={!stateError ? null : 'Campo obrigatório'}
+                            style={{ width: '80%', background: 'white' }}
+                            onChange={
+                                (event) => {
+                                    setState(event.target.value);
+                                    if (!!state) setStateError(false);
+                                }
+                            }
+                        />
+                        <TextField
+                            value={message}
+                            id="filled-multiline-static"
+                            label="Mensagem"
+                            required
+                            error={messageError}
+                            helperText={!messageError ? null : 'Campo obrigatório'}
+                            multiline
+                            maxRows={4}
+                            variant="filled"
+                            style={{ width: '80%', background: 'white' }}
+                            onChange={
+                                (event) => {
+                                    setMessage(event.target.value);
+                                    if (!!message) setMessageError(false);
+                                }
+                            }
+                        />
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'left', padding: '0% 0% 3% 10%', height: '5rem' }}>
+                        <Button
+                            variant='outlined'
+                            style={{
+                                width: '30%',
+                                height: '100%',
+                                color: ColorTheme.primary,
+                                border: 'solid ' + ColorTheme.primary
+                            }}
+                            onClick={() => {
+                                if (!name) {
+                                    setNameError(true);
+                                }
+                                if (!phone) {
+                                    setPhoneError(true);
+                                }
+                                if (!city) {
+                                    setCityError(true);
+                                }
+                                if (!state) {
+                                    setStateError(true);
+                                }
+                                if (!message) {
+                                    setMessageError(true);
+                                }
+
+                                if (!name || !phone || !city || !state || !message) return
+
+                                if (phone.length < 11) {
+                                    toast.error('Número de telefone incompleto.');
+                                    setPhoneError(true);
+                                    return
+                                }
+
+                                const contact = {
+                                    "name": name,
+                                    "phone": {
+                                        "code": phone.slice(0, 2),
+                                        "number": phone.slice(2)
+                                    },
+                                    "email": email,
+                                    "city": city,
+                                    "state": state,
+                                    "message": message,
+                                    "vehicle": vehicle.id
+                                }
+                                sendContact(contact)
+
+                                setName('');
+                                setPhone(undefined);
+                                setEmail('');
+                                setCity('');
+                                setState('');
+                                setMessage('');
+
+                                toast.success('Contato enviado com sucesso.')
+                            }}
+                        >
+
+                            Enviar
+                        </Button>
+                    </div>
+
                 </div>
             </div>
 
