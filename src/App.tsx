@@ -1,8 +1,5 @@
-import { ToastContainer } from "react-toastify";
 import { Root } from "./Root";
 import { Helmet } from 'react-helmet';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 function App() {
   return (
@@ -25,8 +22,6 @@ function App() {
           `}
         </script>
       </Helmet>
-
-      <ToastContainer />
     </div>
   )
 };
