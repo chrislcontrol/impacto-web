@@ -20,7 +20,7 @@ import WhatsappFixed from '../components/WhatsappFixed';
 import { Button, ImageList, ImageListItem, TextField } from '@mui/material';
 import { sendContact } from '../providers/contacts';
 import ReactPhoneInput from 'react-phone-input-material-ui';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import React from 'react';
 
 
@@ -461,7 +461,7 @@ export default () => {
                                 if (!name || !phone || !city || !state || !message) return
 
                                 if (phone.length < 11) {
-                                    // toast.error('Número de telefone incompleto.');
+                                    toast.error('Número de telefone incompleto.');
                                     setPhoneError(true);
                                     return
                                 }
@@ -487,7 +487,7 @@ export default () => {
                                 setState('');
                                 setMessage('');
 
-                                // toast.success('Contato enviado com sucesso.')
+                                toast.success('Contato enviado com sucesso.')
                             }}
                         >
 
