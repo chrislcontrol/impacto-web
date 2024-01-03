@@ -1,4 +1,5 @@
 import { SendContactResponse } from "../types";
+import { toast } from 'react-toastify';
 
 
 
@@ -8,7 +9,7 @@ export type Contact = {
         code: string, 
         number: string
     },
-    email: string | null,
+    email: string,
     city: string,
     state: string,
     message: string, 
@@ -31,11 +32,14 @@ export async function sendContact(contact: Contact): Promise<SendContactResponse
     )
 
         .then(response => {
-            if (response.ok) { return response.json() }
+            if (response.ok) {
+                toast.success('Contato enviado com sucesso.')
+                return response.json()
+            }
             throw response
         })
         .catch(error => {
-            console.log(error)
+            toast.error('Não foi possível enviar seu contato. Tente enviar uma mensagem pelo WhatsApp.')
             throw error
         })
 }
