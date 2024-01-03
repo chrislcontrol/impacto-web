@@ -42,9 +42,8 @@ export default () => {
     const [cityError, setCityError] = useState<boolean>(false)
     const [stateError, setStateError] = useState<boolean>(false)
     const [messageError, setMessageError] = useState<boolean>(false)
+    const [emailError, setEmailError] = useState<boolean>(false)
     const pathVehicleId = useParams<UrlPath>().vehicleId
-
-    const nameInput = React.useRef();
 
 
     if (!pathVehicleId) {
@@ -372,9 +371,11 @@ export default () => {
 
                         <TextField
                             value={email}
-                            required={false}
+                            required
                             id="outlined-required"
                             label="Email"
+                            error={emailError}
+                            helperText={!emailError ? null : 'Campo obrigatório'}
                             style={{ width: '80%', background: 'white' }}
                             inputProps={{
                                 maxlength: 50
@@ -382,6 +383,7 @@ export default () => {
                             onChange={
                                 (event) => {
                                     setEmail(event.target.value);
+                                    if (!!email) setEmailError(false);
                                 }
                             }
                         />
@@ -469,8 +471,11 @@ export default () => {
                                 if (!message) {
                                     setMessageError(true);
                                 }
+                                if (!email) {
+                                    setEmailError(true);
+                                }
 
-                                if (!name || !phone || !city || !state || !message) return
+                                if (!name || !phone || !city || !state || !message || !email) return
 
                                 if (phone.length < 11) {
                                     toast.error('Número de telefone incompleto.');
@@ -493,6 +498,9 @@ export default () => {
                                     "vehicle": vehicle.id
                                 }
                                 sendContact(contact)
+                                    .catch(
+                                        (exception) => { return false }
+                                    )
 
                                 setName('');
                                 setPhone('');
@@ -501,7 +509,7 @@ export default () => {
                                 setState('');
                                 setMessage('');
 
-                                toast.success('Contato enviado com sucesso.')
+
                             }}
                         >
 
