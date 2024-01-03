@@ -4,24 +4,23 @@ import EditRoadIcon from '@mui/icons-material/EditRoad';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import { useEffect, useState } from "react";
+import { Button, ImageList, ImageListItem, TextField } from '@mui/material';
+import { MuiTelInput } from 'mui-tel-input';
+import React, { useEffect, useState } from 'react';
 import { generatePath, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import ColorTheme from "../ColorTheme";
 import FontSize from "../FontSize";
 import Footer from '../components/Footer';
 import { Header } from '../components/Header';
 import Loading from '../components/Loading';
+import WhatsappFixed from '../components/WhatsappFixed';
 import { sessionStorageKeys } from '../constants';
+import { sendContact } from '../providers/contacts';
 import { retrieveVehicle } from '../providers/vehicles';
 import { Vehicle } from '../types';
 import urls from '../urls';
 import { convertNumberToMoney, getSelectedVehicle, translateFuel, translateGear } from '../utils';
-import WhatsappFixed from '../components/WhatsappFixed';
-import { Button, ImageList, ImageListItem, TextField } from '@mui/material';
-import { sendContact } from '../providers/contacts';
-import ReactPhoneInput from 'react-phone-input-material-ui';
-import { toast } from 'react-toastify';
-import React from 'react';
 
 
 export type UrlPath = {
@@ -33,7 +32,7 @@ export default () => {
     const [vehicle, setVehicle] = useState<Vehicle | undefined>(getSelectedVehicle())
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [name, setName] = useState<string | null>()
-    const [phone, setPhone] = useState<string | null>()
+    const [phone, setPhone] = useState<string>('')
     const [email, setEmail] = useState<string | null>(null)
     const [city, setCity] = useState<string | null>()
     const [state, setState] = useState<string | null>()
@@ -340,42 +339,46 @@ export default () => {
                             helperText={!nameError ? null : 'Campo obrigatório'}
                             label="Nome"
                             style={{ width: '80%', background: 'white' }}
+                            inputProps={{
+                                maxlength: 30
+                            }}
                             onChange={(event) => {
                                 if (!!event.target.value) setNameError(false);
                                 setName(event.target.value)
                             }}
                         />
-                        <ReactPhoneInput
+
+                        <MuiTelInput
                             value={phone}
+                            disableDropdown
+                            defaultCountry={'BR'}
+                            forceCallingCode
                             onChange={
                                 (value) => {
                                     setPhone(value);
                                     if (!!phone) setPhoneError(false);
                                 }
                             }
-                            component={TextField}
                             label='Fone'
-                            placeholder='(99) 99999-9999'
-                            country={'br'}
-                            autoFormat
-                            enableAreaCodes
-                            defaultMask={'(..) .....-....'}
-                            alwaysDefaultMask
-                            disableCountryCode
-                            defaultErrorMessage={'Campo obrigatório'}
-                            containerStyle={{ width: '80%', background: 'white' }}
+                            placeholder='48 99999 9999'
+                            style={{ width: '80%', background: 'white' }}
+                            error={phoneError}
+                            helperText={!phoneError ? '' : 'Campo obrigatório'}
+                            required={true}
                             inputProps={{
-                                error: phoneError,
-                                helperText: !phoneError ? null : 'Campo obrigatório', 
-                                required: true
+                                maxlength: 13
                             }}
                         />
+
                         <TextField
                             value={email}
                             required={false}
                             id="outlined-required"
                             label="Email"
                             style={{ width: '80%', background: 'white' }}
+                            inputProps={{
+                                maxlength: 50
+                            }}
                             onChange={
                                 (event) => {
                                     setEmail(event.target.value);
@@ -390,6 +393,9 @@ export default () => {
                             error={cityError}
                             helperText={!cityError ? null : 'Campo obrigatório'}
                             style={{ width: '80%', background: 'white' }}
+                            inputProps={{
+                                maxlength: 30
+                            }}
                             onChange={
                                 (event) => {
                                     setCity(event.target.value);
@@ -405,9 +411,12 @@ export default () => {
                             error={stateError}
                             helperText={!stateError ? null : 'Campo obrigatório'}
                             style={{ width: '80%', background: 'white' }}
+                            inputProps={{
+                                maxlength: 2
+                            }}
                             onChange={
                                 (event) => {
-                                    setState(event.target.value);
+                                    setState(event.target.value.toUpperCase());
                                     if (!!state) setStateError(false);
                                 }
                             }
@@ -423,6 +432,9 @@ export default () => {
                             maxRows={4}
                             variant="filled"
                             style={{ width: '80%', background: 'white' }}
+                            inputProps={{
+                                maxlength: 50
+                            }}
                             onChange={
                                 (event) => {
                                     setMessage(event.target.value);
@@ -466,11 +478,13 @@ export default () => {
                                     return
                                 }
 
+                                const rawPhone = phone.replace(/\s/g, '')
+
                                 const contact = {
                                     "name": name,
                                     "phone": {
-                                        "code": phone.slice(0, 2),
-                                        "number": phone.slice(2)
+                                        "code": rawPhone.slice(3, 5),
+                                        "number": rawPhone.slice(5)
                                     },
                                     "email": email,
                                     "city": city,
@@ -481,7 +495,7 @@ export default () => {
                                 sendContact(contact)
 
                                 setName('');
-                                setPhone(undefined);
+                                setPhone('');
                                 setEmail('');
                                 setCity('');
                                 setState('');
